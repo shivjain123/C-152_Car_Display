@@ -1,7 +1,23 @@
+//Base
+AFRAME.registerComponent("base", {
+    schema: {
+        radius: { type: "number", default: 15 },
+        height: { type: "number", default: 3.6 }
+    },
+    init: function () {
+        this.el.setAttribute("geometry", {
+            primitive: "cylinder",
+            radius: this.data.radius,
+            height: this.data.height
+        });
+        this.el.setAttribute("material", { color: "#B87333" });
+    },
+});
 //Car
 AFRAME.registerComponent("car", {
     schema: {
-        modelRef: { type: "string", default: "../assets/scene.gltf" }
+        modelRef: { type: "string", default: "../assets/scene.gltf" },
+        clickCounter: {type: "number", default: 0}
     },
     init: function () {
         this.el.setAttribute("gltf-model", this.data.modelRef);
@@ -14,7 +30,7 @@ AFRAME.registerComponent("car", {
     },
     update: function () {
         window.addEventListener("click", e => {
-            this.data.clickCounter = this.data.clickCounter + 1;
+            this.data.clickCounter += 1;
             if (this.data.clickCounter === 1) {
                 const rotation = { x: 0, y: 20, z: 0 };
                 this.el.setAttribute("rotation", rotation);
@@ -44,20 +60,4 @@ AFRAME.registerComponent("car", {
             }
         });
     }
-});
-
-//Base
-AFRAME.registerComponent("base", {
-    schema: {
-        radius: { type: "number", default: 15 },
-        height: { type: "number", default: 3.6 }
-    },
-    init: function () {
-        this.el.setAttribute("geometry", {
-            primitive: "cylinder",
-            radius: this.data.radius,
-            height: this.data.height
-        });
-        this.el.setAttribute("material", { color: "#B87333" });
-    },
 });
